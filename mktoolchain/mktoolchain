@@ -12,7 +12,7 @@ printf "[\e[34;1mINFO\e[0m] Building from $SOURCE...\n"
 
 function RAISE() {
     printf "fatal error occured"
-    #rm -rf $TARGET
+    rm -rf $TARGET
     exit 1
 }
 
@@ -27,20 +27,26 @@ source $MKTOOL/build-helpers
 require make
 require wget
 require g++
+require "libSDL2.so"
 require "libSDL2_ttf.so"
-require "libSDL2_image*"
+require "libSDL2_image.so"
 
 ### Build #####################################################################
 
 mkdir -p $MKTOOL/$TARGET && cd $MKTOOL/$TARGET
 
-# download $GRAPICLOCATION
+download $GRAPICLOCATION
 
 run "unpack $BUILDVER.tgz" tar xvzf $BUILDVER.tgz
+
+rm -f $BUILDVER.tgz
 
 cd $BUILDVER/src
 
 run "compile the so" g++ -fPIC -shared Grapic.cpp -I . -I /usr/include/SDL2 -o $MKTOOL/$TARGET/libgrapic.so -L /usr/lib/ -l SDL2 -l SDL2_image -l SDL2_ttf
+
+cp -r $MKTOOL/$TARGET/$BUILDVER/data $SOURCE
+cp $MKTOOL/$TARGET/$BUILDVER/src/Grapic.h $SOURCE/inc
 
 ### We're done! ################################################################
 trap - EXIT

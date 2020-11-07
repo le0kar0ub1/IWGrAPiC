@@ -1,6 +1,6 @@
 CXX		:=	g++
 
-TARGET	:=	project
+TARGET	:=	iwgrapic
 
 BUILDIR	:=	target
 
@@ -49,6 +49,9 @@ $(BUILDIR)/%.$(EXTOBJ): src/%.$(EXTSRC)
 	@mkdir -p $(shell dirname $@)
 	@$(CXX) $(CXXFLAGS) -c $< -o $@
 	@-echo -e "    CXX      $@"
+
+install:
+	@./mktoolchain/mktoolchain
 
 vg: $(TARGET)
 	@valgrind	--leak-check=full 		\

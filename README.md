@@ -16,6 +16,7 @@ So, you don't have to install permanently the library.
 
 * make
 * git
+* SDL2 SDL2_image SDL2_ttf
 
 ## Install
 
@@ -32,6 +33,10 @@ then the following command to build:
 and the following one to run;
 
 `make run`
+
+clean the build:
+
+`make clean`
 
 ### Epilogue
 

@@ -2,9 +2,9 @@
 
 Installer for the `GrAPiC` graphic library provided by Lyon 1.
 
-The goal of this installer is to minimize the side effects and the user job while installing and using a little library.
+The goal of this installer is to minimize the side effects and the user job while installing and using a little library like GrAPiC.
 
-This installer is for Linux machine only.
+This installer is working for Linux machine only.
 
 ## Philosophy
 

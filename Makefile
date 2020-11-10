@@ -12,12 +12,14 @@ CXXFLAGS :=	    $(INCLUDE)		    \
 				-Winline			\
 				-Wuninitialized		\
 
-LDFLAGS	:=  -L mktoolchain/toolchain    				\
-            -l grapic 									\
-            -Wl,-rpath="$(PWD)/mktoolchain/toolchain"
+LDFLAGS	:=  -L mktoolchain/toolchain/libs    		    	\
+            -l grapic 										\
+            -l SDL2											\
+            -l SDL2_image									\
+            -l SDL2_ttf										\
+            -Wl,-rpath="$(PWD)/mktoolchain/toolchain/libs"	\
             
-            #-I mktoolchain/toolchain/include		\
-            #-I inc									\
+            
 
 EXTSRC := cpp
 EXTOBJ := o
@@ -26,7 +28,7 @@ SRC :=	$(wildcard src/*.$(EXTSRC) src/**/*.$(EXTSRC))
 
 OBJ := 	$(patsubst src/%.$(EXTSRC), $(BUILDIR)/%.$(EXTOBJ), $(SRC))
 
-.PHONY: all run clean
+.PHONY: all run clean install
 
 all: $(TARGET)
 

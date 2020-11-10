@@ -1,6 +1,6 @@
 function install_preliminaries()
 {
-    mkdir -p $MKTOOL/$TARGET $MKTOOL/$TARGET/include
+    mkdir -p $MKTOOL/$TARGET $MKTOOL/$TARGET/include $MKTOOL/$TARGET/libs
 }
 
 function install_sdl()
@@ -25,6 +25,7 @@ function install_sdl_master()
     install_sdl "SDL2-$LIB_SDL_VERSION" $LIB_SDL_ENDPOINT
 
     cp $MKTOOL/$TARGET/SDL2-$LIB_SDL_VERSION/include/*.h $MKTOOL/$TARGET/include
+    cp $MKTOOL/$TARGET/SDL2-$LIB_SDL_VERSION/build/.libs/libSDL2.so $MKTOOL/$TARGET/libs
 }
 
 function install_sdl_ttf()
@@ -32,6 +33,7 @@ function install_sdl_ttf()
     install_sdl "SDL2_ttf-$LIB_SDL_TTF_VERSION" $LIB_SDL_TTF_ENDPOINT
 
     cp $MKTOOL/$TARGET/SDL2_ttf-$LIB_SDL_TTF_VERSION/SDL_ttf.h $MKTOOL/$TARGET/include
+    cp $MKTOOL/$TARGET/SDL2_ttf-$LIB_SDL_TTF_VERSION/.libs/libSDL2_ttf* $MKTOOL/$TARGET/libs
 }
 
 
@@ -40,6 +42,7 @@ function install_sdl_image()
     install_sdl "SDL2_image-$LIB_SDL_IMAGE_VERSION" $LIB_SDL_IMAGE_ENDPOINT
 
     cp $MKTOOL/$TARGET/SDL2_image-$LIB_SDL_IMAGE_VERSION/SDL_image.h $MKTOOL/$TARGET/include
+    cp $MKTOOL/$TARGET/SDL2_image-$LIB_SDL_IMAGE_VERSION/.libs/libSDL2_image* $MKTOOL/$TARGET/libs
 }
 
 function install_grapic()
@@ -60,12 +63,12 @@ function compile_grapic()
 {
     local build="grapic-$LIB_GRAPIC_VERSION-Linux"
 
-    cd $MKTOOL/$TARGET/
+    cd $MKTOOL/$TARGET
 
-    run "compile grapic" 																				\
+   run "compile $build"																					\
     	g++ -fPIC -shared $build/src/Grapic.cpp -I $build/src 											\
     	-I SDL2-$LIB_SDL_VERSION/include -L SDL2-$LIB_SDL_VERSION/build/.libs -l SDL2					\
-    	-I SDL2_image-$LIB_SDL_IMAGE_VERSION -L SDL2_image-$LIB_SDL_iMAGE_VERSION/.libs -l SDL2_image   \
-    	-I SDL2_ttf-$LIB_SDL_TTF_VERSION -L SDL2_ttf-$LIB_SDL_TTF_VERSION/.libs -l SDL2_ttf				    \	  						\
-    	-o $MKTOOL/$TARGET/libgrapic.so
+    	-I SDL2_image-$LIB_SDL_IMAGE_VERSION -L SDL2_image-$LIB_SDL_IMAGE_VERSION/.libs -l SDL2_image   \
+    	-I SDL2_ttf-$LIB_SDL_TTF_VERSION -L SDL2_ttf-$LIB_SDL_TTF_VERSION/.libs -l SDL2_ttf				\
+    	-o $MKTOOL/$TARGET/libs/libgrapic.so
 }

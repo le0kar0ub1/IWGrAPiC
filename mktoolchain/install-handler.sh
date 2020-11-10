@@ -16,14 +16,15 @@ function install_sdl()
 
     cd $build
 
-    run "configure & compile $build" ./configure && make all
+    run "configure $build" ./configure
+    run "compile $build" make all
 }
 
 function install_sdl_master()
 {
     install_sdl "SDL2-$LIB_SDL_VERSION" $LIB_SDL_ENDPOINT
 
-    cp SDL2-$LIB_SDL_VERSION/include/*.h $MKTOOL/$TARGET/include
+    cp $MKTOOL/$TARGET/SDL2-$LIB_SDL_VERSION/include/*.h $MKTOOL/$TARGET/include
 }
 
 function install_sdl_ttf()
@@ -38,7 +39,7 @@ function install_sdl_image()
 {
     install_sdl "SDL2_image-$LIB_SDL_IMAGE_VERSION" $LIB_SDL_IMAGE_ENDPOINT
 
-    cp SDL2_image-$LIB_SDL_IMAGE_VERSION/SDL_image.h $MKTOOL/$TARGET/include
+    cp $MKTOOL/$TARGET/SDL2_image-$LIB_SDL_IMAGE_VERSION/SDL_image.h $MKTOOL/$TARGET/include
 }
 
 function install_grapic()

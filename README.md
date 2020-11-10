@@ -8,7 +8,7 @@ This installer is working for Linux machine only.
 
 ## Philosophy
 
-When you want to create a project with the library `GrAPiC` juste clone this repository, install with a command and create your project inside this repository.
+When you want to create a project with the library `GrAPiC` just clone this repository, install all the dependencies with a command and create your project inside this repository.
 
 So, you don't have to install permanently the library.
 
@@ -16,7 +16,7 @@ So, you don't have to install permanently the library.
 
 * make
 * git
-* SDL2 SDL2_image SDL2_ttf
+* curl
 
 ## Install
 

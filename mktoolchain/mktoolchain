@@ -12,7 +12,7 @@ printf "[\e[34;1mINFO\e[0m] Building from $SOURCE...\n"
 
 function RAISE() {
     printf "fatal error occured"
-    #rm -rf $TARGET
+    rm -rf $TARGET
     exit 1
 }
 

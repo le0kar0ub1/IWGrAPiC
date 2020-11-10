@@ -12,10 +12,11 @@ CXXFLAGS :=	    $(INCLUDE)		    \
 				-Winline			\
 				-Wuninitialized		\
 
-LDFLAGS	:=  -L mktoolchain/build    \
-            -l grapic 				\
-            -I /usr/include/SDL2/ 	\
-            -Wl,-rpath="$(PWD)/mktoolchain/build"
+LDFLAGS	:=  -L mktoolchain/toolchain    			\
+            -l grapic 								\
+            -I mktoolchain/toolchain/include		\
+            -I inc									\
+            -Wl,-rpath="$(PWD)/mktoolchain/toolchain"
 
 EXTSRC := cpp
 EXTOBJ := o

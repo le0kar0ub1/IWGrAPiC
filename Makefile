@@ -4,7 +4,7 @@ TARGET	:=	iwgrapic
 
 BUILDIR	:=	target
 
-INCLUDE	:=	$(addprefix -I, inc /usr/include/SDL2)
+INCLUDE	:=	$(addprefix -I, inc mktoolchain/toolchain/include)
 
 CXXFLAGS :=	    $(INCLUDE)		    \
 				-Wall 				\
@@ -12,11 +12,12 @@ CXXFLAGS :=	    $(INCLUDE)		    \
 				-Winline			\
 				-Wuninitialized		\
 
-LDFLAGS	:=  -L mktoolchain/toolchain    			\
-            -l grapic 								\
-            -I mktoolchain/toolchain/include		\
-            -I inc									\
+LDFLAGS	:=  -L mktoolchain/toolchain    				\
+            -l grapic 									\
             -Wl,-rpath="$(PWD)/mktoolchain/toolchain"
+            
+            #-I mktoolchain/toolchain/include		\
+            #-I inc									\
 
 EXTSRC := cpp
 EXTOBJ := o

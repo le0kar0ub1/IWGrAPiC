@@ -12,17 +12,17 @@ function install_sdl()
 
     download $endpoint
 
-    run "unpack $build" tar xvzf $build.tar.gz && rm -f $build.tar.gz
+    run "unpack $build" tar xzf $build.tar.gz && rm -f $build.tar.gz
 
-    cd $build && ./configure && make all
+    cd $build
+
+    run "configure & compile $build" ./configure && make all
 }
 
 function install_sdl_master()
 {
     install_sdl "SDL2-$LIB_SDL_VERSION" $LIB_SDL_ENDPOINT
 
-    # build/.libs/libSDL2.so
-    # include
     cp SDL2-$LIB_SDL_VERSION/include/*.h $MKTOOL/$TARGET/include
 }
 
@@ -30,9 +30,7 @@ function install_sdl_ttf()
 {
     install_sdl "SDL2_ttf-$LIB_SDL_TTF_VERSION" $LIB_SDL_TTF_ENDPOINT
 
-    # .libs/libSDL2_ttf.so
-    # ./
-    cp SDL2_ttf-$LIB_SDL_TTF_VERSION/SDL_ttf.h $MKTOOL/$TARGET/include
+    cp $MKTOOL/$TARGET/SDL2_ttf-$LIB_SDL_TTF_VERSION/SDL_ttf.h $MKTOOL/$TARGET/include
 }
 
 
@@ -40,8 +38,6 @@ function install_sdl_image()
 {
     install_sdl "SDL2_image-$LIB_SDL_IMAGE_VERSION" $LIB_SDL_IMAGE_ENDPOINT
 
-    # .libs/libSDL2_image.so
-    # ./
     cp SDL2_image-$LIB_SDL_IMAGE_VERSION/SDL_image.h $MKTOOL/$TARGET/include
 }
 

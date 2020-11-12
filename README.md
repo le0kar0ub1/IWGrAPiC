@@ -1,6 +1,6 @@
 # IWGrAPiC
 
-Installer for the `GrAPiC` graphic library provided by Lyon 1.
+Installer for the `GrAPiC` graphic library provided by [Alexandre Meyer](https://perso.liris.cnrs.fr/alexandre.meyer/grapic).
 
 The goal of this installer is to minimize the side effects and the user job while installing and using a little library like GrAPiC.
 

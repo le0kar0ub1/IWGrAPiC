@@ -34,7 +34,7 @@ target-dir:
 build: target-dir $(TARGET)
 
 project:
-	mkdir -p $(target)/{src,inc}
+	@mkdir -p $(target)/{src,inc}
 
 debug ?= 0
 ifeq ($(debug), 1)

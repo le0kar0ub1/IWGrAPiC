@@ -1,6 +1,6 @@
 function install_preliminaries()
 {
-    mkdir -p $MKTOOL/$TARGET $MKTOOL/$TARGET/include $MKTOOL/$TARGET/libs
+    mkdir -p $MKTOOL/$TARGET/include $MKTOOL/$TARGET/libs
 }
 
 function install_sdl()
@@ -12,12 +12,12 @@ function install_sdl()
 
     download $endpoint
 
-    run "unpack $build" tar xzf $build.tar.gz && rm -f $build.tar.gz
+    run "Extract $build" tar xzf $build.tar.gz && rm -f $build.tar.gz
 
     cd $build
 
-    run "configure $build" ./configure
-    run "compile $build" make all
+    run "Configure $build" ./configure
+    run "Build $build" make all
 }
 
 function install_sdl_master()
@@ -53,10 +53,10 @@ function install_grapic()
 
     download $LIB_GRAPIC_ENDPOINT
 
-    run "unpack $build" tar xvzf $build.tgz && rm -f $build.tgz
+    run "Extract $build" tar xvzf $build.tgz && rm -f $build.tgz
 
     cp -r $MKTOOL/$TARGET/$build/data $SOURCE
-    cp $MKTOOL/$TARGET/$build/src/Grapic.h $SOURCE/inc
+    cp $MKTOOL/$TARGET/$build/src/Grapic.h $MKTOOL/$TARGET/include
 }
 
 function compile_grapic()
@@ -65,7 +65,7 @@ function compile_grapic()
 
     cd $MKTOOL/$TARGET
 
-   run "compile $build"																					\
+    run "Build $build"																					\
     	g++ -fPIC -shared $build/src/Grapic.cpp -I $build/src 											\
     	-I SDL2-$LIB_SDL_VERSION/include -L SDL2-$LIB_SDL_VERSION/build/.libs -l SDL2					\
     	-I SDL2_image-$LIB_SDL_IMAGE_VERSION -L SDL2_image-$LIB_SDL_IMAGE_VERSION/.libs -l SDL2_image   \

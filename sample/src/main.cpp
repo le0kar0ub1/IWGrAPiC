@@ -2,7 +2,7 @@
 
 using namespace grapic;
 
-int main(int argc, char** argv)
+int main(void)
 {
      winInit("Won", 500, 500);   // Créer une fenêtre (taille 500x500)     
      winClear();                    // Efface la fenêtre     

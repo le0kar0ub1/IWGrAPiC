@@ -1,10 +1,10 @@
 CXX		:=	g++
 
-TARGET	:=	iwgrapic
+TARGET	:=	$(target).bin
 
-BUILDIR	:=	target
+BUILDIR	:=	target/$(target)
 
-INCLUDE	:=	$(addprefix -I, inc mktoolchain/toolchain/include)
+INCLUDE	:=	$(addprefix -I, $(target)/inc mktoolchain/toolchain/include)
 
 CXXFLAGS :=	    $(INCLUDE)		    \
 				-Wall 				\
@@ -17,52 +17,44 @@ LDFLAGS	:=  -L mktoolchain/toolchain/libs    		    	\
             -l SDL2											\
             -l SDL2_image									\
             -l SDL2_ttf										\
-            -Wl,-rpath="$(PWD)/mktoolchain/toolchain/libs"	\
-            
-            
+            -Wl,-rpath="$(PWD)/mktoolchain/toolchain/libs"
 
 EXTSRC := cpp
 EXTOBJ := o
 
-SRC :=	$(wildcard src/*.$(EXTSRC) src/**/*.$(EXTSRC))
+SRC :=	$(wildcard $(target)/src/*.$(EXTSRC) $(target)/src/**/*.$(EXTSRC))
 
-OBJ := 	$(patsubst src/%.$(EXTSRC), $(BUILDIR)/%.$(EXTOBJ), $(SRC))
+OBJ := 	$(patsubst $(target)/src/%.$(EXTSRC), $(BUILDIR)/%.$(EXTOBJ), $(SRC))
 
-.PHONY: all run clean install
+.PHONY: all run clean install target-dir
 
-all: $(TARGET)
+target-dir:
+	@(test -d $(target) && test -d $(target)/src) || (echo "Invalid target directory" && exit 1)
 
-disassemble: $(TARGET)
-	@objdump --no-show-raw-insn -d -Mintel $(TARGET) | source-highlight -s asm -f esc256 | less -eRiMX
+build: target-dir $(TARGET)
+
+project:
+	mkdir -p $(target)/{src,inc}
 
 debug ?= 0
 ifeq ($(debug), 1)
     CXXFLAGS += -D DEBUG -g3
 endif
 
-re:	clean all
-
-$(TARGET):	$(OBJ)
+$(TARGET): $(OBJ)
 	@$(CXX) -o $(TARGET) $(OBJ) $(LDFLAGS)
 	@-echo -e " LINKED      $@"
 
 clean:
-	@rm -rf $(BUILDIR) $(TARGET)
+	@rm -rf $(BUILDIR) *.bin
 
-$(BUILDIR)/%.$(EXTOBJ): src/%.$(EXTSRC)
+$(BUILDIR)/%.$(EXTOBJ): $(target)/src/%.$(EXTSRC)
 	@mkdir -p $(shell dirname $@)
 	@$(CXX) $(CXXFLAGS) -c $< -o $@
 	@-echo -e "    CXX      $@"
 
 install:
 	@./mktoolchain/mktoolchain
-
-vg: $(TARGET)
-	@valgrind	--leak-check=full 		\
-				--show-leak-kinds=all 	\
-				--track-origins=yes 	\
-				--verbose 				\
-				$(TARGET)
 
 run: $(TARGET)
 	@./$(TARGET)

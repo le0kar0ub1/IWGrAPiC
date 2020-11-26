@@ -8,7 +8,7 @@ This installer is working for Linux system only.
 
 ## Philosophy
 
-When you want to create a project with the library `GrAPiC` just clone this repository, install all the dependencies with a command and create your project inside this repository.
+When you want to create some projects with the library `GrAPiC` just clone this repository, install all the dependencies with a command and create your projects inside this repository.
 
 So, you don't have to install permanently the library.
 
@@ -28,19 +28,23 @@ Local installation handled:
   * SDL2_ttf
   * GrAPiC
 
-## Build
+## Build & Run
 
-You can code your project in the provided `src` directory and put your personnal headers in the `inc` one.
+Create a project in IWGrAPiC.
+
+`make project target=$project`
+
+You can code your project in the provided `src` directory (for each project) and put your personnal headers in the `inc` one.
 
 then the following command to build:
 
-`make`
+`make build target=$project`
 
 and the following one to run;
 
-`make run`
+`make run target=$project` or `./project.bin`
 
-clean the build:
+clean the *all* build:
 
 `make clean`
 

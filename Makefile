@@ -4,7 +4,7 @@ TARGET	:=	$(target).bin
 
 BUILDIR	:=	target/$(target)
 
-INCLUDE	:=	$(addprefix -I, $(target)/inc mktoolchain/toolchain/include)
+INCLUDE	:=	$(addprefix -I, $(target) mktoolchain/toolchain/include)
 
 CXXFLAGS :=	    $(INCLUDE)		    \
 				-Wall 				\
@@ -22,24 +22,19 @@ LDFLAGS	:=  -L mktoolchain/toolchain/libs    		    	\
 EXTSRC := cpp
 EXTOBJ := o
 
-SRC :=	$(wildcard $(target)/src/*.$(EXTSRC) $(target)/src/**/*.$(EXTSRC))
+SRC :=	$(wildcard $(target)/*.$(EXTSRC) $(target)/**/*.$(EXTSRC))
 
-OBJ := 	$(patsubst $(target)/src/%.$(EXTSRC), $(BUILDIR)/%.$(EXTOBJ), $(SRC))
+OBJ := 	$(patsubst $(target)/%.$(EXTSRC), $(BUILDIR)/%.$(EXTOBJ), $(SRC))
 
 .PHONY: all run clean install target-dir
 
 target-dir:
-	@(test -d $(target) && test -d $(target)/src) || (echo "Invalid target directory" && exit 1)
+	@(test -d $(target)) || (echo "Invalid target directory" && exit 1)
 
 build: target-dir $(TARGET)
 
 project:
-	@mkdir -p $(target)/{src,inc}
-
-debug ?= 0
-ifeq ($(debug), 1)
-    CXXFLAGS += -D DEBUG -g3
-endif
+	@mkdir -p $(target)
 
 $(TARGET): $(OBJ)
 	@$(CXX) -o $(TARGET) $(OBJ) $(LDFLAGS)
@@ -48,7 +43,7 @@ $(TARGET): $(OBJ)
 clean:
 	@rm -rf $(BUILDIR) *.bin
 
-$(BUILDIR)/%.$(EXTOBJ): $(target)/src/%.$(EXTSRC)
+$(BUILDIR)/%.$(EXTOBJ): $(target)/%.$(EXTSRC)
 	@mkdir -p $(shell dirname $@)
 	@$(CXX) $(CXXFLAGS) -c $< -o $@
 	@-echo -e "    CXX      $@"
